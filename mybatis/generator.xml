@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE generatorConfiguration  
+	  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"  
+	  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">  
+      
+<generatorConfiguration>  
+	<classPathEntry location="E:\workspace\lxt\WebRoot\WEB-INF\lib\mysql-connector-java-5.1.7-bin.jar" />  
+    
+	<context id="Mysql2Tables" targetRuntime="MyBatis3"> 
+		<plugin type="PaginationPlugin" />
+	 
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"  
+			connectionURL="jdbc:mysql://localhost:3306/lxt_db"  
+			userId="root"  
+			password="root">  
+		</jdbcConnection>  
+      
+		<javaTypeResolver >  
+			<property name="forceBigDecimals" value="false" />  
+		</javaTypeResolver>  
+      
+		<javaModelGenerator targetPackage="com.lxt.model" targetProject="src">  
+			<property name="enableSubPackages" value="true" />  
+			<property name="trimStrings" value="true" />  
+		</javaModelGenerator>  
+      
+		<sqlMapGenerator targetPackage="com.lxt.dao.mapper"  targetProject="src">  
+			<property name="enableSubPackages" value="true" />  
+		</sqlMapGenerator>  
+      
+		<javaClientGenerator type="XMLMAPPER" targetPackage="com.lxt.dao.mapper"  targetProject="src">  
+			<property name="enableSubPackages" value="true" />  
+		</javaClientGenerator>  
+      
+		<table schema="lxt_db" tableName="lxt_chat_friend" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+		<table schema="lxt_db" tableName="lxt_chat_friend_category" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+		<table schema="lxt_db" tableName="lxt_chat_group" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+		<table schema="lxt_db" tableName="lxt_chat_group_user" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+		<table schema="lxt_db" tableName="lxt_chat_record" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+		<table schema="lxt_db" tableName="lxt_department" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+		<table schema="lxt_db" tableName="lxt_dictionary" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+		<table schema="lxt_db" tableName="lxt_dictionary_type" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+		<table schema="lxt_db" tableName="lxt_node" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+		<table schema="lxt_db" tableName="lxt_organization" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table> 
+		<table schema="lxt_db" tableName="lxt_process" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table> 
+		<table schema="lxt_db" tableName="lxt_process_category" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table> 
+		<table schema="lxt_db" tableName="lxt_user" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table> 
+		<table schema="lxt_db" tableName="lxt_user_setting" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table> 
+		
+	</context>  
+</generatorConfiguration>  

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration >
+  <context id="context" >
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/lxt_db?useUnicode=true&characterEncoding=utf8&autoReconnect=true" userId="root" password="root" />
+    <javaModelGenerator targetPackage="com.lxt.model" targetProject="lxt-server" />
+    <sqlMapGenerator targetPackage="com.lxt.dao.mapper" targetProject="lxt-server" />
+    <javaClientGenerator targetPackage="com.lxt.dao.ext" targetProject="lxt-server" type="XMLMAPPER" />
+    <table schema="???" tableName="lxt-server" >
+      <columnOverride column="???" property="???" />
+    </table>
+  </context>
+</generatorConfiguration>
