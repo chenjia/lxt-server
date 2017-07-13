@@ -63,11 +63,11 @@
 	<bean id="managementService" factory-bean="processEngine"
 		factory-method="getManagementService" />
 
-	<!-- <bean id="activitiUtils" class="com.lxt.workflow.bpmn.utils.ActivitiUtils">
+	<bean id="activitiUtils" class="com.lxt.common.plugin.workflow.bpmn.utils.ActivitiUtils">
 		<constructor-arg>
 			<ref bean="processEngine" />
 		</constructor-arg>
-	</bean> -->
+	</bean>
 
 	<bean id="mappingJacksonHttpMessageConverter"
 		class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">

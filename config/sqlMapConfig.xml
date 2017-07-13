@@ -32,16 +32,15 @@
 
 	<!-- 指定映射器路径 -->
 	<mappers>
-		<!-- <mapper resource="com/lxt/mapper/DictionaryMapper.xml" />
-		<mapper resource="com/lxt/mapper/DepartmentMapper.xml" />
-		<mapper resource="com/lxt/mapper/OrganizationMapper.xml" />
-		<mapper resource="com/lxt/mapper/ProcessCategoryMapper.xml" />
-		<mapper resource="com/lxt/mapper/ProcessMapper.xml" />
-		<mapper resource="com/lxt/mapper/UserMapper.xml" />
-		<mapper resource="com/lxt/mapper/UserSettingMapper.xml" />
-		<mapper resource="com/lxt/mapper/ChatRecordMapper.xml" />
-		<mapper resource="com/lxt/mapper/ChatFriendMapper.xml" />
-		
-		<mapper resource="com/lxt/mapper/ext/ChatExtMapper.xml" /> -->
+		<mapper resource="com/lxt/dao/mapper/DictionaryMapper.xml" />
+		<mapper resource="com/lxt/dao/mapper/DepartmentMapper.xml" />
+		<mapper resource="com/lxt/dao/mapper/OrganizationMapper.xml" />
+		<mapper resource="com/lxt/dao/mapper/ProcessCategoryMapper.xml" />
+		<mapper resource="com/lxt/dao/mapper/ProcessMapper.xml" />
+		<mapper resource="com/lxt/dao/mapper/UserMapper.xml" />
+		<mapper resource="com/lxt/dao/mapper/UserSettingMapper.xml" />
+		<mapper resource="com/lxt/dao/mapper/ChatRecordMapper.xml" />
+		<mapper resource="com/lxt/dao/mapper/ChatFriendMapper.xml" />
+		<mapper resource="com/lxt/dao/ext/ChatExtMapper.xml" />
 	</mappers>
 </configuration> 

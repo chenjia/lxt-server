@@ -4,7 +4,7 @@
 <dwr>
 	<allow>
 		<create creator="new" scope="application">
-			<param name="class" value="com.lxt.chat.ChatServer" />
+			<param name="class" value="com.lxt.common.plugin.chat.ChatServer" />
 		</create>
 	</allow>
 </dwr>

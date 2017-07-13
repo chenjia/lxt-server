@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lxt.dao.ext.ChatExtMapper">
+  <resultMap id="ChatRecordVO" type="com.lxt.model.vo.ChatRecordVO">
+    <id column="RECORD_ID" jdbcType="VARCHAR" property="recordId" />
+    <result column="SEND_ID" jdbcType="VARCHAR" property="sendId" />
+    <result column="RECEIVE_ID" jdbcType="VARCHAR" property="receiveId" />
+    <result column="RECEIVE_USER" jdbcType="VARCHAR" property="receiveUser" />
+    <result column="MSG_TYPE" jdbcType="INTEGER" property="msgType" />
+    <result column="CONTENT" jdbcType="VARCHAR" property="content" />
+    <result column="INSERT_TIME" jdbcType="TIMESTAMP" property="insertTime" />
+  </resultMap>
+  <select id="queryChatRecords" resultMap="ChatRecordVO">
+    select 
+    r.RECORD_ID, r.SEND_ID, r.RECEIVE_ID, r.MSG_TYPE, r.CONTENT, r.INSERT_TIME, u.REALNAME as RECEIVE_USER
+    from lxt_chat_record r,lxt_user u
+    where ((r.SEND_ID=#{sendId,jdbcType=VARCHAR} and r.RECEIVE_ID=#{receiveId,jdbcType=VARCHAR}) or (r.RECEIVE_ID=#{sendId,jdbcType=VARCHAR} and r.SEND_ID=#{receiveId,jdbcType=VARCHAR}))
+    and u.USER_ID=r.RECEIVE_ID 
+    and #{beforeDate,jdbcType=TIMESTAMP} >= r.INSERT_TIME
+    order by r.INSERT_TIME ASC
+    limit 0,#{count,jdbcType=INTEGER}
+  </select>
+</mapper>
