@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
@@ -22,6 +23,8 @@ import org.patchca.utils.encoder.EncoderHelper;
 import org.patchca.word.RandomWordFactory;
 
 import com.lxt.common.bean.Response;
+import com.lxt.common.utils.JWTUtils;
+import com.lxt.common.utils.UUIDUtils;
 
 import sun.misc.BASE64Encoder;
 
@@ -40,20 +43,27 @@ public class PatchcaServlet extends HttpServlet implements Serializable {
 	public PatchcaServlet() {
 		super();
 	}
+	
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		doPost(req, resp);
+	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Response result = new Response();
-		Map<String, Object> params = result.getBody().getData();
+		Response resp = new Response();
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		cs.setFilterFactory(new WobbleRippleFilterFactory());
 		String patchca = EncoderHelper.getChallangeAndWriteImage(cs, "png", out);
 		request.getSession().setAttribute(CAPTCHA, patchca);
 		byte[] bytes = out.toByteArray();
 		String base64Img = encoder.encodeBuffer(bytes).trim();
-		params.put(CAPTCHA, base64Img);
+		Map<String, String> claimMap = new HashMap<String, String>();
+		claimMap.put(CAPTCHA, patchca);
+		resp.getHead().setToken(JWTUtils.sign(claimMap));
+		resp.getBody().setData(base64Img);
 		
 		response.setContentType("application/json");
-		response.getWriter().write(result.toJson());
+		response.getWriter().write(resp.toJson());
 		response.getWriter().flush();
 		response.getWriter().close();
 	}

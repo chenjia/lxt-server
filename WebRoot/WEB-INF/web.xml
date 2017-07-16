@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	id="lxt" version="3.0">
 	
-	<display-name>lxt</display-name>
+	<display-name>lxt-server</display-name>
 	
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>

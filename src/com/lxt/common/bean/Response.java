@@ -1,9 +1,9 @@
 package com.lxt.common.bean;
 
 public class Response extends Json {
-	private Head head;
+	private Head head = new Head();
 	
-	private Body body;
+	private Body body = new Body();
 
 	public Head getHead() {
 		return head;

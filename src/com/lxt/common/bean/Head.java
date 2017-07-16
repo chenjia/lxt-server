@@ -7,6 +7,10 @@ public class Head {
 
 	private String token;
 
+	private int status = 200;
+
+	private boolean debug = true;
+
 	public String getUserId() {
 		return userId;
 	}
@@ -29,6 +33,22 @@ public class Head {
 
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public boolean isDebug() {
+		return debug;
+	}
+
+	public void setDebug(boolean debug) {
+		this.debug = debug;
 	}
 
 }

@@ -1,16 +1,20 @@
 package com.lxt.common.bean;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.lxt.common.utils.FormatUtils;
 
 public class Body {
-	private Map<String, Object> data = new HashMap<String, Object>();
+	private Object data = new Object();
 
-	public Map<String, Object> getData() {
+	@Override
+	public String toString() {
+		return FormatUtils.obj2Json(data);
+	}
+
+	public Object getData() {
 		return data;
 	}
 
-	public void setData(Map<String, Object> data) {
+	public void setData(Object data) {
 		this.data = data;
 	}
 

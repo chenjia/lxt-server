@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.JsonProcessingException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thoughtworks.xstream.XStream;
 
 public class FormatUtils {
@@ -119,8 +119,6 @@ public class FormatUtils {
 	public static String obj2Json(Object obj) {
 		String jsonStr = "";
 		try {
-			dateFormat.applyPattern(LONG_DATE);
-			objectMapper.getSerializationConfig().setDateFormat(dateFormat);
 			jsonStr = objectMapper.writeValueAsString(obj);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
