@@ -36,7 +36,7 @@ public class BaseController {
 		return opt;
 	}
 	
-	public Request getRequest(HttpServletRequest request){
+	public static Request getRequest(HttpServletRequest request){
 		Request req = new Request();
 		
 		String opt = request.getParameter("request");

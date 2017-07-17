@@ -11,6 +11,7 @@ import com.auth0.jwt.JWTCreator.Builder;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.InvalidClaimException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.Verification;
 
@@ -44,13 +45,12 @@ public class JWTUtils {
 			JWTVerifier verifier = verification.build();
 			verifier.verify(token);
 		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
 			pass = false;
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
 			pass = false;
 		} catch (InvalidClaimException e) {
-			e.printStackTrace();
+			pass = false;
+		} catch (TokenExpiredException e) {
 			pass = false;
 		}
 		return pass;
@@ -59,9 +59,8 @@ public class JWTUtils {
 	public static void main(String[] args) {
 		Map<String, String> claimMap = new HashMap<String, String>();
 		
-		JWTUtils jwt = new JWTUtils();
-		String token = jwt.sign(claimMap);
-		boolean isPass = jwt.unsign(token, claimMap);
+		String token = JWTUtils.sign(claimMap);
+		boolean isPass = JWTUtils.unsign(token, claimMap);
 		System.out.println(isPass);
 	}
 }

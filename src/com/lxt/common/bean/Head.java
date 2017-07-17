@@ -1,6 +1,8 @@
 package com.lxt.common.bean;
 
-public class Head {
+import java.io.Serializable;
+
+public class Head implements Serializable{
 	private String userId;
 
 	private String url;

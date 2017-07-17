@@ -1,8 +1,9 @@
 package com.lxt.common.bean;
 
+import java.io.Serializable;
 import java.util.Map;
 
-public class Request extends Json {
+public class Request extends Json implements Serializable{
 	private Head head;
 
 	private Body body;

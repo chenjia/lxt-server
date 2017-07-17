@@ -1,4 +1,4 @@
-package com.lxt.common.plugin.patchca;
+package com.lxt.common.plugin.captcha;
 
 import java.awt.Color;
 import java.io.ByteArrayOutputStream;
@@ -28,7 +28,7 @@ import com.lxt.common.utils.UUIDUtils;
 
 import sun.misc.BASE64Encoder;
 
-public class PatchcaServlet extends HttpServlet implements Serializable {
+public class CaptchaServlet extends HttpServlet implements Serializable {
 	private static MyCaptchaService cs = null;
 	private static Random random = new Random();
 	private static BASE64Encoder encoder = new sun.misc.BASE64Encoder();
@@ -40,7 +40,7 @@ public class PatchcaServlet extends HttpServlet implements Serializable {
 		cs = new MyCaptchaService();
 	}
 
-	public PatchcaServlet() {
+	public CaptchaServlet() {
 		super();
 	}
 	
@@ -53,16 +53,15 @@ public class PatchcaServlet extends HttpServlet implements Serializable {
 		Response resp = new Response();
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		cs.setFilterFactory(new WobbleRippleFilterFactory());
-		String patchca = EncoderHelper.getChallangeAndWriteImage(cs, "png", out);
-		request.getSession().setAttribute(CAPTCHA, patchca);
+		String captcha = EncoderHelper.getChallangeAndWriteImage(cs, "png", out);
 		byte[] bytes = out.toByteArray();
 		String base64Img = encoder.encodeBuffer(bytes).trim();
 		Map<String, String> claimMap = new HashMap<String, String>();
-		claimMap.put(CAPTCHA, patchca);
+		claimMap.put(CAPTCHA, captcha);
 		resp.getHead().setToken(JWTUtils.sign(claimMap));
 		resp.getBody().setData(base64Img);
 		
-		response.setContentType("application/json");
+		response.setContentType("application/json;charset=utf-8");
 		response.getWriter().write(resp.toJson());
 		response.getWriter().flush();
 		response.getWriter().close();

@@ -1,6 +1,8 @@
 package com.lxt.common.bean;
 
-public class Response extends Json {
+import java.io.Serializable;
+
+public class Response extends Json implements Serializable{
 	private Head head = new Head();
 	
 	private Body body = new Body();

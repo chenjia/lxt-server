@@ -1,5 +1,6 @@
 package com.lxt.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,9 +17,12 @@ import com.lxt.common.bean.Response;
 import com.lxt.common.bean.SessionUser;
 import com.lxt.common.constant.ControllerConstant;
 import com.lxt.common.constant.SessionConstant;
+import com.lxt.common.plugin.captcha.CaptchaServlet;
 import com.lxt.common.utils.CheckUtils;
 import com.lxt.common.utils.FormatUtils;
+import com.lxt.common.utils.JWTUtils;
 import com.lxt.common.utils.SecurityUtils;
+import com.lxt.model.User;
 import com.lxt.model.UserSetting;
 import com.lxt.service.ServiceException;
 import com.lxt.service.UserService;
@@ -38,15 +42,45 @@ public class SystemController extends BaseController{
 		
 		String username = req.getString("username");
 		String password = req.getString("password");
-		int captcha = req.getInt("captcha");
+		String captcha = req.getString("captcha");
 		
-		System.out.println(req+username);
-//		Subject currentUser = org.apache.shiro.SecurityUtils.getSubject();
-//		String sessionCaptchaShiro = (String) currentUser.getSession().getAttribute(SessionConstant.CAPTCHA);
-//		if (CheckUtils.isEmpty(captcha)) {
-//			result.getHead().setStatus(SessionConstant.HTTP_STATUS_FAIL);
-//			result.getBody().setData("验证码不能为空！");
-//		} else if(captcha.equalsIgnoreCase(sessionCaptchaShiro)) {
+		if (CheckUtils.isEmpty(captcha)) {
+			resp.getHead().setStatus(SessionConstant.HTTP_STATUS_FAIL);
+			resp.getBody().setData("验证码不能为空！");
+		} else {
+			Map<String, String> claimMap = new HashMap<String, String>();
+			claimMap.put(CaptchaServlet.CAPTCHA, ""+captcha);
+			boolean b = JWTUtils.unsign(req.getHead().getToken(), claimMap);
+			System.out.println(b);
+			if(b){
+				try {
+					User user = userService.login(username, SecurityUtils.md5Encrypt(password));
+					if(user != null) {
+						Map<String, Object> map = new HashMap<String, Object>();
+						UserSetting userSetting = userService.getUserSettingByUserId(user.getUserId());
+						map.put("msg", "登录成功！");
+						map.put("user", user);
+						map.put("userSetting", userSetting);
+						
+						claimMap.clear();
+						claimMap.put("userId", user.getUserId());
+						String token = JWTUtils.sign(claimMap);
+						resp.getHead().setUserId(user.getUserId());
+						resp.getHead().setToken(token);
+						resp.getBody().setData(map);
+					}else {
+						resp.getHead().setStatus(SessionConstant.HTTP_STATUS_FAIL);
+						resp.getBody().setData("用户名或密码错误！");
+					}
+				} catch (ServiceException e) {
+					e.printStackTrace();
+				}
+			}else{
+				resp.getHead().setStatus(SessionConstant.HTTP_STATUS_FAIL);
+				resp.getBody().setData("验证码错误！");
+			}
+		}
+//		else if(captcha.equalsIgnoreCase(sessionCaptchaShiro)) {
 //			UsernamePasswordToken token = new UsernamePasswordToken(username, SecurityUtils.md5Encrypt(password));
 //			
 //			try {
@@ -88,6 +122,8 @@ public class SystemController extends BaseController{
 //			result.getHead().setStatus(SessionConstant.HTTP_STATUS_FAIL);
 //			result.getBody().setData("验证码错误！");
 //		}
+		
+		System.out.println(resp.toJson());
 		
 		return resp;
 	}

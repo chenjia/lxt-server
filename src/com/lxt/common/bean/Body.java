@@ -1,9 +1,11 @@
 package com.lxt.common.bean;
 
+import java.io.Serializable;
+
 import com.lxt.common.utils.FormatUtils;
 
-public class Body {
-	private Object data = new Object();
+public class Body implements Serializable{
+	private Object data = null;
 
 	@Override
 	public String toString() {
