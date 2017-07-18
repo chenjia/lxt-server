@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.Map;
 
 public class Request extends Json implements Serializable{
+
+	private static final long serialVersionUID = 7281363994714242949L;
+
 	private Head head;
 
 	private Body body;

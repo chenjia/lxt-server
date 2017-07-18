@@ -5,6 +5,9 @@ import java.io.Serializable;
 import com.lxt.common.utils.FormatUtils;
 
 public class Body implements Serializable{
+
+	private static final long serialVersionUID = -8089310335871372357L;
+	
 	private Object data = null;
 
 	@Override

@@ -3,6 +3,9 @@ package com.lxt.common.bean;
 import java.io.Serializable;
 
 public class Head implements Serializable{
+
+	private static final long serialVersionUID = 2690917287978962548L;
+
 	private String userId;
 
 	private String url;
