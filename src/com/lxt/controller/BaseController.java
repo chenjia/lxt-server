@@ -26,7 +26,7 @@ public class BaseController {
 		String opt = request.getParameter("opt");
 		if("false".equals(SystemConstant.DEBUG)){
 			try {
-				opt = SecurityUtils.desDecrypt(opt,SecurityUtils.key);
+				opt = SecurityUtils.desDecrypt(opt,SecurityUtils.secretKey);
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (Exception e) {
@@ -42,7 +42,7 @@ public class BaseController {
 		String opt = request.getParameter("request");
 		if("false".equals(SystemConstant.DEBUG)){
 			try {
-				opt = SecurityUtils.desDecrypt(opt,SecurityUtils.key);
+				opt = SecurityUtils.desDecrypt(opt,SecurityUtils.secretKey);
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (Exception e) {
@@ -61,7 +61,7 @@ public class BaseController {
 		String opt = request.getParameter("opt");
 		if("false".equals(SystemConstant.DEBUG)){
 			try {
-				opt = SecurityUtils.desDecrypt(opt,SecurityUtils.key);
+				opt = SecurityUtils.desDecrypt(opt,SecurityUtils.secretKey);
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (Exception e) {

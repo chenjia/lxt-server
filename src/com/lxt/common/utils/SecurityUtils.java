@@ -1,86 +1,70 @@
 package com.lxt.common.utils;
 
-import java.io.IOException;
+import java.security.Key;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 
 import javax.crypto.Cipher;
-import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.DESKeySpec;
+import javax.crypto.spec.DESedeKeySpec;
+import javax.crypto.spec.IvParameterSpec;
 
-import org.springframework.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+import com.sun.org.apache.xml.internal.security.utils.Base64;
 
 public class SecurityUtils {
-	public final static String key = PropertiesUtils.getProperties("/config.properties").getProperty("key");
+	public final static String secretKey = PropertiesUtils.getProperties("/config.properties").getProperty("key");
 	
-	private final static String DES = "DES";
+	private final static String iv = "12345678";
 	
 	private final static String encoding = "UTF-8";
 
 	
 	
-    /**
-     * Description 根据键值进行加密
-     * @param data 
-     * @param key  加密键byte数组
-     * @return
-     * @throws Exception
-     */
-    public static String desEncrypt(String data, String key) throws Exception {
-    	// 生成一个可信任的随机数源
-        SecureRandom sr = new SecureRandom();
- 
-        // 从原始密钥数据创建DESKeySpec对象
-        DESKeySpec dks = new DESKeySpec(key.getBytes(encoding));
- 
-        // 创建一个密钥工厂，然后用它把DESKeySpec转换成SecretKey对象
-        SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(DES);
-        SecretKey securekey = keyFactory.generateSecret(dks);
- 
-        // Cipher对象实际完成加密操作
-        Cipher cipher = Cipher.getInstance(DES);
- 
-        // 用密钥初始化Cipher对象
-        cipher.init(Cipher.ENCRYPT_MODE, securekey, sr);
- 
-        byte[] bt = cipher.doFinal(data.getBytes(encoding));
-        String strs = new BASE64Encoder().encode(bt);
-        return strs;
-    }
- 
-    /**
-     * Description 根据键值进行解密
-     * @param data
-     * @param key  加密键byte数组
-     * @return
-     * @throws IOException
-     * @throws Exception
-     */
-    public static String desDecrypt(String data, String key) throws IOException,Exception {
-        if (data == null){
-        	return null;
-        }
-        BASE64Decoder decoder = new BASE64Decoder();
-        // 生成一个可信任的随机数源
-        SecureRandom sr = new SecureRandom();
-        // 从原始密钥数据创建DESKeySpec对象
-        DESKeySpec dks = new DESKeySpec(key.getBytes(encoding));
-        // 创建一个密钥工厂，然后用它把DESKeySpec转换成SecretKey对象
-        SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(DES);
-        SecretKey securekey = keyFactory.generateSecret(dks);
-        // Cipher对象实际完成解密操作
-        Cipher cipher = Cipher.getInstance(DES);
-        // 用密钥初始化Cipher对象
-        cipher.init(Cipher.DECRYPT_MODE, securekey, sr);
-        byte[] bt = cipher.doFinal(decoder.decodeBuffer(data));
-        return new String(bt);
-    }
-    
+	public static String desEncrypt(String plainText) throws Exception {
+		return desEncrypt(plainText, secretKey);
+	}
+
+	public static String desEncrypt(String plainText, String secretKey)
+			throws Exception {
+		Key deskey = null;
+		DESedeKeySpec spec = new DESedeKeySpec(secretKey.getBytes());
+		SecretKeyFactory keyfactory = SecretKeyFactory.getInstance("desede");
+		deskey = keyfactory.generateSecret(spec);
+
+		Cipher cipher = Cipher.getInstance("desede/CBC/PKCS5Padding");
+		IvParameterSpec ips = new IvParameterSpec(iv.getBytes());
+		cipher.init(Cipher.ENCRYPT_MODE, deskey, ips);
+		byte[] encryptData = cipher.doFinal(plainText.getBytes(encoding));
+		return Base64.encode(encryptData);
+	}
+	
+	public static String desDecrypt(String plainText) throws Exception {
+		if (StringUtils.isBlank(plainText)) {
+			return "";
+		}
+		return desDecrypt(plainText, secretKey);
+	}
+
+	public static String desDecrypt(String encryptText, String secretKey)
+			throws Exception {
+		if (StringUtils.isBlank(encryptText) || StringUtils.isBlank(secretKey)) {
+			return "";
+		}
+		Key deskey = null;
+		DESedeKeySpec spec = new DESedeKeySpec(secretKey.getBytes());
+		SecretKeyFactory keyfactory = SecretKeyFactory.getInstance("desede");
+		deskey = keyfactory.generateSecret(spec);
+		Cipher cipher = Cipher.getInstance("desede/CBC/NoPadding");
+		IvParameterSpec ips = new IvParameterSpec(iv.getBytes());
+		cipher.init(Cipher.DECRYPT_MODE, deskey, ips);
+
+		byte[] decryptData = cipher.doFinal(Base64.decode(encryptText));
+
+		return new String(decryptData, encoding).trim();
+	}
+	
 	public static String md5Encrypt(String str){
 		try {  
 	        MessageDigest md = MessageDigest.getInstance("MD5");  
@@ -105,10 +89,9 @@ public class SecurityUtils {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		String data = "ed26d4cd99aa11e5b8a4c89cdc776729";
-        String key = "ed26d4cd99aa11e5b8a4c89cdc776729";
-        String key2 = "ed26d4cd99aa11e5b8a4c89cdc776729";
-        System.err.println(desEncrypt(data, key));
-        System.err.println(desDecrypt(desEncrypt(data, key), key2));
+		String text = desEncrypt("1234567890-=~!@#$%^&*()_+qwertyuioplkjhfdgscxvnvbnm;',./");
+		System.out.println(text);
+		text = desDecrypt(text);
+		System.out.println(text);
 	}
 }

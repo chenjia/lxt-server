@@ -14,12 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lxt.common.bean.Request;
 import com.lxt.common.bean.Response;
-import com.lxt.common.bean.SessionUser;
-import com.lxt.common.constant.ControllerConstant;
 import com.lxt.common.constant.SessionConstant;
 import com.lxt.common.plugin.captcha.CaptchaServlet;
 import com.lxt.common.utils.CheckUtils;
-import com.lxt.common.utils.FormatUtils;
 import com.lxt.common.utils.JWTUtils;
 import com.lxt.common.utils.SecurityUtils;
 import com.lxt.model.User;
