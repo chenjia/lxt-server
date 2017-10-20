@@ -3,37 +3,28 @@
 	xmlns="http://java.sun.com/xml/ns/javaee"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	id="lxt" version="3.0">
-	
+
 	<display-name>lxt-server</display-name>
-	
+
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
-	
+
 	<error-page>
 		<error-code>404</error-code>
 		<location>/404.html</location>
 	</error-page>
-	
+
 	<error-page>
 		<error-code>500</error-code>
 		<location>/500.html</location>
 	</error-page>
-	
+
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:applicationContext*.xml</param-value>
 	</context-param>
-	
-	<filter>
-		<filter-name>authFilter</filter-name>
-		<filter-class>com.lxt.common.filter.AuthFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>authFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-	
+
 	<filter>
 		<filter-name>crossDomainFilter</filter-name>
 		<filter-class>com.lxt.common.filter.CrossDomainFilter</filter-class>
@@ -42,7 +33,20 @@
 		<filter-name>crossDomainFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	
+
+	<filter>
+		<filter-name>authFilter</filter-name>
+		<filter-class>com.lxt.common.filter.AuthFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>authFilter</filter-name>
+		<url-pattern>/system/*</url-pattern>
+	</filter-mapping>
+
+	<!-- <filter-mapping>
+		<filter-name>authFilter</filter-name>
+		<url-pattern>/chat/*</url-pattern>
+	</filter-mapping> -->
 	
 	<servlet>
 		<servlet-name>spring</servlet-name>
@@ -102,12 +106,16 @@
 			<param-value>false</param-value>
 		</init-param>
 		<init-param>
-			<param-name>allowScriptTagRemoting</param-name >
+			<param-name>allowScriptTagRemoting</param-name>
 			<param-value>true </param-value>
 		</init-param>
 		<init-param>
 			<param-name>maxWaitAfterWrite</param-name>
 			<param-value>30000</param-value>
+		</init-param>
+		<init-param>
+			<param-name>scriptSessionTimeout</param-name>
+			<param-value>1800000</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
@@ -116,7 +124,7 @@
 		<servlet-name>chat</servlet-name>
 		<url-pattern>/chatEngine/*</url-pattern>
 	</servlet-mapping>
-	
+
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>

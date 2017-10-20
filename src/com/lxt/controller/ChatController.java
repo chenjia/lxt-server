@@ -64,9 +64,10 @@ public class ChatController extends BaseController{
 	@RequestMapping("/friend")
 	@ResponseBody
 	public Response queryFriendList(HttpServletRequest request, HttpServletResponse response) throws ControllerException {
-		List<ChatFriendCategoryVO> list = null;
+		Request req = BaseController.getRequest(request);
+		String userId = req.getHead().getUserId();
 		
-		String userId = getUser(request).getUserId();
+		List<ChatFriendCategoryVO> list = null;
 		
 		try {
 			list = chatService.queryFriendList(userId);
@@ -84,20 +85,15 @@ public class ChatController extends BaseController{
 	public Response queryChatRecord(HttpServletRequest request, HttpServletResponse response) throws ControllerException {
 		Request req = getRequest(request);
 		
-		String sendId = (String)params.get("sendId");
-		String receiveId = (String)params.get("receiveId");
-		String beforeDateStr = (String)params.get("beforeDate");
-		String countStr = (String)params.get("count");
+		String sendId = req.getString("sendId");
+		String receiveId = req.getString("receiveId");
+		long beforeDateTime = req.getLong("beforeDate");
+		int count = req.getInt("count");
 		
 		Date beforeDate = null;
-		Integer count = null;
 		
-		if(CheckUtils.isNotEmpty(beforeDateStr)){
-			beforeDate = new Date(Long.parseLong(beforeDateStr));
-		}
-		
-		if(CheckUtils.isNotEmpty(countStr)){
-			count = new Integer(countStr);
+		if(CheckUtils.isNotEmpty(beforeDateTime)){
+			beforeDate = new Date(beforeDateTime);
 		}
 		
 		List<ChatRecordVO> chatRecords = null;

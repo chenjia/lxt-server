@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50527
 File Encoding         : 65001
 
-Date: 2017-07-13 22:04:12
+Date: 2017-10-20 16:22:48
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -685,10 +685,23 @@ CREATE TABLE `lxt_chat_record` (
 -- ----------------------------
 -- Records of lxt_chat_record
 -- ----------------------------
-INSERT INTO `lxt_chat_record` VALUES ('3DE677C542B94D86A7E89BFA28D4FF4D', 'admin', 'xiaoting', '0', '<p><img src=\"/lxt_server/ueditor/jsp/upload/image/20170421/1492738769523062191.jpg\" title=\"1492738769523062191.jpg\" alt=\"Chrysanthemum.jpg\"/></p>', '2017-04-21 10:01:10');
-INSERT INTO `lxt_chat_record` VALUES ('54F7A3C25000414B94511057813F9D87', 'admin', 'xiaoting', '0', '<p><img src=\"/lxt_server/ueditor/jsp/upload/image/20170421/1492740370780016785.jpg\" title=\"1492740370780016785.jpg\" alt=\"Chrysanthemum.jpg\"/></p>', '2017-04-21 10:06:12');
-INSERT INTO `lxt_chat_record` VALUES ('D1DF9982BD1F40E6BA758AD0F2F56D06', 'admin', 'xiaoting', '0', '<p><img src=\"/lxt_server/ueditor/jsp/upload/image/20170421/1492737654809023417.png\" title=\"1492737654809023417.png\" alt=\"temp.png\"/></p>', '2017-04-21 09:20:59');
-INSERT INTO `lxt_chat_record` VALUES ('DEBB8DDAFF82450BB36679EDC780D0D2', 'admin', 'xiaoting', '0', '<p style=\"line-height: 16px;\"><img style=\"vertical-align: middle; margin-right: 2px;\" src=\"http://localhost:8080/lxt_server/client/pc/bower_components/ueditor/dialogs/attachment/fileTypeImages/icon_rar.gif\"/><a style=\"font-size:12px; color:#0066cc;\" href=\"/lxt_server/ueditor/jsp/upload/file/20170421/1492737667732081477.zip\" title=\"mxgraph-master.zip\">mxgraph-master.zip</a></p><p><br/></p>', '2017-04-21 09:21:11');
+INSERT INTO `lxt_chat_record` VALUES ('103F2636D72D4E66ACFBAF325B735719', 'admin', 'xiaoting', '0', 'app上面测试的，也能发消息，就是头像地址有问题，不过都是小意思', '2017-10-20 16:08:46');
+INSERT INTO `lxt_chat_record` VALUES ('1148751FF3034F0D9BEE932B503413DA', 'xiaoting', 'admin', '0', '好像可以了', '2017-10-20 15:33:48');
+INSERT INTO `lxt_chat_record` VALUES ('17EF37A5EB524C2F809DAAE90069ABE4', 'xiaoting', 'admin', '0', '哦', '2017-10-20 16:08:04');
+INSERT INTO `lxt_chat_record` VALUES ('2C0EF39CF7764343B2D9CA61D569572B', 'admin', 'admin', '0', '自己测试着玩', '2017-10-20 15:26:00');
+INSERT INTO `lxt_chat_record` VALUES ('36100F17FE8F4FA98C3A805F6927ED8D', 'admin', 'xiaoting', '0', 'aaaa', '2017-10-20 14:24:47');
+INSERT INTO `lxt_chat_record` VALUES ('3E5021E30C4A4166A5F9B47F231955FD', 'admin', 'xiaoting', '0', '今天先测试到这里，后面再做表情和图片', '2017-10-20 15:21:54');
+INSERT INTO `lxt_chat_record` VALUES ('4C39C1DDB53E4BBAB140B0286DBCF0CE', 'admin', 'xiaoting', '0', '今天星期五了，月底项目要上线，是喜是忧呢', '2017-10-20 15:35:30');
+INSERT INTO `lxt_chat_record` VALUES ('511030A7D601436A80D504C3A554EA7A', 'admin', 'xiaoting', '0', '小样，还整不了你了', '2017-10-20 15:20:37');
+INSERT INTO `lxt_chat_record` VALUES ('69E1D5E29EE743C591C6F9E5BD95A484', 'xiaoting', 'admin', '0', '好好做  其他是事情别多想', '2017-10-20 15:40:17');
+INSERT INTO `lxt_chat_record` VALUES ('6B94CBD5691B40A3B1E7E7A2B7E99194', 'xiaoting', 'admin', '0', '图片支持不好做，需要用到ueditor插件，手机上面兼容性不是很好', '2017-10-20 15:25:03');
+INSERT INTO `lxt_chat_record` VALUES ('8956C2C2351B41D599EDBB978CF337DA', 'admin', 'xiaoting', '0', '嘿嘿', '2017-10-20 15:33:38');
+INSERT INTO `lxt_chat_record` VALUES ('8C155C9BB0AC4F1E8377CE805C475855', 'xiaoting', 'admin', '0', 'bbbb', '2017-10-20 15:17:31');
+INSERT INTO `lxt_chat_record` VALUES ('8F915BCE17BE4B75BF5E43ABA9C50973', 'xiaoting', 'admin', '0', '88888888888888888888888888888888888', '2017-10-20 15:18:31');
+INSERT INTO `lxt_chat_record` VALUES ('921724DC28DD4015A91A71D24CA093E7', 'admin', 'xiaoting', '0', '能收到吗', '2017-10-20 15:17:58');
+INSERT INTO `lxt_chat_record` VALUES ('93A719EDF6584460BE9B1E5A69E98B28', 'admin', 'xiaoting', '0', '可能需要自己定UI', '2017-10-20 15:25:23');
+INSERT INTO `lxt_chat_record` VALUES ('A911B1B050014F10AD46F3F3DCA9D8EE', 'xiaoting', 'admin', '0', '调试了半天，总算发出去了，我日', '2017-10-20 15:18:17');
+INSERT INTO `lxt_chat_record` VALUES ('B85F940ACDF840F9955083E4FE3D39BD', 'xiaoting', 'admin', '0', '消息发送速度还挺快的，达到了毫秒级', '2017-10-20 15:20:59');
 
 -- ----------------------------
 -- Table structure for lxt_department

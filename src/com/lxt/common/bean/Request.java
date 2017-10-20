@@ -16,9 +16,14 @@ public class Request extends Json implements Serializable{
 		return (String) map.get(key);
 	}
 	
-	public int getInt(String key ) {
+	public Integer getInt(String key) {
 		Map<String, Object> map = (Map<String, Object>) body.getData();
-		return (int) map.get(key);
+		return (Integer) map.get(key);
+	}
+	
+	public Long getLong(String key) {
+		Map<String, Object> map = (Map<String, Object>) body.getData();
+		return (Long) map.get(key);
 	}
 
 	public Head getHead() {

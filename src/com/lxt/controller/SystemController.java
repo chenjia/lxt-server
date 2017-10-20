@@ -62,6 +62,7 @@ public class SystemController extends BaseController{
 						claimMap.clear();
 						claimMap.put("userId", user.getUserId());
 						String token = JWTUtils.sign(claimMap);
+						setSessionAttribute("userId", user.getUserId(), request);
 						resp.getHead().setUserId(user.getUserId());
 						resp.getHead().setToken(token);
 						resp.getBody().setData(map);

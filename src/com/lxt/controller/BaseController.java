@@ -84,6 +84,7 @@ public class BaseController {
 
 	public void setSessionAttribute(String key, Object value,
 			HttpServletRequest request) {
+		System.out.println(request.getSession().getId());
 		request.getSession().setAttribute(key, value);
 	}
 

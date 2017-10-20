@@ -16,6 +16,7 @@ import com.lxt.common.bean.Response;
 import com.lxt.common.utils.CheckUtils;
 import com.lxt.model.Process;
 import com.lxt.model.ProcessExample;
+import com.lxt.model.ProcessExample.Criteria;
 import com.lxt.service.ProcessService;
 import com.lxt.service.ServiceException;
 
@@ -28,56 +29,31 @@ public class ProcessController extends BaseController {
 
 	@RequestMapping("/list")
 	@ResponseBody
-	public Response queryByPage(HttpServletRequest request,
-			HttpServletResponse response) throws ControllerException {
-
-		// String name = params.get("name");
-		// String key = params.get("key");
-		// String version = params.get("version");
-		// String startCreateTime = params.get("startCreateTime");
-		// String endCreateTime = params.get("endCreateTime");
-		// String state = params.get("state");
-		// String startPublishTime = params.get("startPublishTime");
-		// String endPublishTime = params.get("endPublishTime");
-		// String memo = params.get("memo");
-		// String page = params.get("page");
-		// String rows = params.get("rows");
-		// String sort = params.get("sort");
-		// String order = params.get("order");
-
+	public Response queryByPage(HttpServletRequest request, HttpServletResponse response) throws ControllerException {
 		Request req = getRequest(request);
 
-		int currentPage = (int) params.get("currentPage");
-		int pageSize = (int) params.get("pageSize");
-		String sortColumn = (String) params.get("sortColumn");
-		String sortType = (String) params.get("sortType");
-		String processName = (String) params.get("processName");
-		Integer status = (Integer) params.get("status");
-
-		int limitEnd = pageSize;
-		int limitStart = (currentPage - 1) * limitEnd;
+		int page = req.getInt("page");
+		int rows = req.getInt("rows");
+		String sort = req.getString("sort");
+		String orderBy = req.getString("orderBy");
+		
+		String name = req.getString("name");
+		Integer status = req.getInt("status");
 
 		ProcessExample example = new ProcessExample();
-		example.setLimitStart(limitStart);
-		example.setLimitEnd(limitEnd);
-		example.setOrderByClause(sortColumn + " " + sortType);
+		Criteria criteria = example.createCriteria();
+		
+		example.setLimitStart((page-1)*rows);
+		example.setLimitEnd(rows);
+		example.setOrderByClause(orderBy+" "+sort);
 
-		if (CheckUtils.isNotEmpty(processName)) {
-			example.or().andNameLike("%" + processName + "%");
+		if (CheckUtils.isNotEmpty(name)) {
+			criteria.andNameLike("%" + name + "%");
 		}
 
 		if (CheckUtils.isNotEmpty(status)) {
-			example.or().andStatusEqualTo(status);
+			criteria.andStatusEqualTo(status);
 		}
-
-		// example.or().andProcessKeyLike(key);
-		// example.or().andVersionNoLike(version);
-		// example.or().andCreateTimeBetween(FormatUtils.str2Date(startCreateTime),
-		// FormatUtils.str2Date(endCreateTime));
-		// example.or().andStatusEqualTo(Integer.parseInt(state));
-		// example.or().andPublishTimeBetween(FormatUtils.str2Date(startPublishTime),
-		// FormatUtils.str2Date(endPublishTime));
-		// example.or().andMemoLike(memo);
 
 		try {
 			PageData<Process> pageData = processService.queryByPage(example);

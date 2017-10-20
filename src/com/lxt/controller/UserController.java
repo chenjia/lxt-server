@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lxt.common.bean.PageData;
+import com.lxt.common.bean.Request;
 import com.lxt.common.bean.Response;
 import com.lxt.common.utils.CheckUtils;
 import com.lxt.model.User;
 import com.lxt.model.UserExample;
+import com.lxt.model.UserExample.Criteria;
 import com.lxt.service.ServiceException;
 import com.lxt.service.UserService;
 
@@ -23,41 +25,32 @@ public class UserController extends BaseController{
 	@Autowired
     private UserService userService;
 
-	@RequestMapping("/queryByPage")
+	@RequestMapping("/list")
 	@ResponseBody
 	public Response queryByPage(HttpServletRequest request, HttpServletResponse response) throws ControllerException {
-
-		super.setParams(request);
+		Request req = getRequest(request);
 		
-		String name = (String) params.get("name");
-		String key = (String) params.get("key");
-		String version = (String) params.get("version");
-		String startCreateTime = (String) params.get("startCreateTime");
-		String endCreateTime = (String) params.get("endCreateTime");
-		String state = (String) params.get("state");
-		String startPublishTime = (String) params.get("startPublishTime");
-		String endPublishTime = (String) params.get("endPublishTime");
-		String memo = (String) params.get("memo");
-		String page = (String) params.get("page");
-		String rows = (String) params.get("rows");
-		String sort = (String) params.get("sort");
-		String order = (String) params.get("order");
-		int limitStart = (Integer.parseInt(page)-1)*Integer.parseInt(rows);
-		int limitEnd = limitStart+Integer.parseInt(rows);
+		int page = req.getInt("page");
+		int rows = req.getInt("rows");
+		String sort = req.getString("sort");
+		String orderBy = req.getString("orderBy");
+		
+		String orgId = req.getString("orgId");
+		String username = req.getString("username");
 		
 		UserExample example = new UserExample();
-		if(CheckUtils.isNotEmpty(name)){
-			example.or().andUsernameEqualTo(name);
+		Criteria criteria = example.createCriteria();
+		
+		example.setLimitStart((page-1)*rows);
+		example.setLimitEnd(rows);
+		example.setOrderByClause(orderBy+" "+sort);
+		
+		if(CheckUtils.isNotEmpty(orgId)){
+			criteria.andOrgIdEqualTo(orgId);
 		}
-//		example.or().andProcessKeyLike(key);
-//		example.or().andVersionNoLike(version);
-//		example.or().andCreateTimeBetween(FormatUtils.str2Date(startCreateTime), FormatUtils.str2Date(endCreateTime));
-//		example.or().andStatusEqualTo(Integer.parseInt(state));
-//		example.or().andPublishTimeBetween(FormatUtils.str2Date(startPublishTime), FormatUtils.str2Date(endPublishTime));
-//		example.or().andMemoLike(memo);
-//		example.setLimitStart(limitStart);
-//		example.setLimitEnd(limitEnd);
-//		example.setOrderByClause(order+" "+sort);
+		if(CheckUtils.isNotEmpty(username)){
+			criteria.andUsernameLike(username);
+		}
 		
 		try {
 			PageData<User> pageData = userService.queryUserByPage(example);

@@ -9,6 +9,7 @@ import org.directwebremoting.ScriptSession;
 import org.directwebremoting.ScriptSessionFilter;
 import org.directwebremoting.ScriptSessions;
 import org.directwebremoting.ServerContextFactory;
+import org.directwebremoting.WebContextFactory;
 import org.directwebremoting.extend.ScriptSessionManager;
 
 import com.lxt.common.constant.MessageConstant;
@@ -31,6 +32,11 @@ public class ChatServer {
 		Container container = ServerContextFactory.get().getContainer();
 		ScriptSessionManager manager = container.getBean(ScriptSessionManager.class);
 		manager.addScriptSessionListener(new ChatSessionListener());
+	}
+	
+	public static void binding(String userId) {
+		ScriptSession scriptSession = WebContextFactory.get().getScriptSession();
+        scriptSession.setAttribute("userId", userId);
 	}
 	
 	public static void sendMessage(String messageJson) {

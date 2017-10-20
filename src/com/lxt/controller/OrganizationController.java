@@ -13,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.lxt.common.bean.Request;
+import com.lxt.common.bean.Response;
 import com.lxt.common.utils.CheckUtils;
 import com.lxt.model.Organization;
 import com.lxt.model.User;
@@ -30,6 +32,28 @@ public class OrganizationController extends BaseController{
 	
 	@Autowired
     private UserService userService;
+	
+	@RequestMapping("/getChildren")
+	@ResponseBody
+	public Response getChildren(HttpServletRequest request, HttpServletResponse response) throws ControllerException {
+		Request req = getRequest(request);
+		
+		String orgId = req.getString("orgId");
+		List<Organization> organizations = null;
+		
+		if(CheckUtils.isEmpty(orgId)){
+			orgId = "0";
+		}
+		try {
+			organizations = organizationService.getSubOrganizationById(orgId);
+			resp.getBody().setData(organizations);
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			throw new ControllerException(e);
+		}
+		
+		return resp;
+	}
 
 	@RequestMapping("/getSubOrganizationById")
 	@ResponseBody

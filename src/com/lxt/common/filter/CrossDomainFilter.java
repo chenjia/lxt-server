@@ -23,7 +23,7 @@ public class CrossDomainFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request,
 			HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-		response.setHeader("Access-Control-Allow-Origin", "http://localhost:8888");
+		response.setHeader("Access-Control-Allow-Origin", "http://192.168.43.185:8888");
 		response.setHeader("Access-Control-Allow-Methods", "POST,GET,OPTIONS");
 		response.setHeader("Access-Control-Allow-Headers", "Origin,X-Requested-With,Content-Type,Accept");
 		response.setHeader("Access-Control-Allow-Credentials", "true");
